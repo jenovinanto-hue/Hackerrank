@@ -1,0 +1,478 @@
+Java Sort
+import java.util.*;
+
+class Student {
+    private int id;
+    private String fname;
+    private double cgpa;
+
+    public Student(int id, String fname, double cgpa) {
+        super();
+        this.id = id;
+        this.fname = fname;
+        this.cgpa = cgpa;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public double getCgpa() {
+        return cgpa;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int testCases = Integer.parseInt(in.nextLine());
+
+        List<Student> studentList = new ArrayList<Student>();
+        while (testCases > 0) {
+            int id = in.nextInt();
+            String fname = in.next();
+            double cgpa = in.nextDouble();
+
+            Student st = new Student(id, fname, cgpa);
+            studentList.add(st);
+
+            testCases--;
+        }
+
+        // Sorting logic using a Comparator
+        Collections.sort(studentList, new Comparator<Student>() {
+            @Override
+            public int compare(Student s1, Student s2) {
+                // 1. Sort by CGPA in decreasing order
+                // We use Double.compare(s2, s1) for descending
+                if (Math.abs(s2.getCgpa() - s1.getCgpa()) > 0.0001) {
+                    return Double.compare(s2.getCgpa(), s1.getCgpa());
+                }
+                
+                // 2. If CGPA is same, sort by Name in alphabetical order
+                if (!s1.getFname().equals(s2.getFname())) {
+                    return s1.getFname().compareTo(s2.getFname());
+                }
+                
+                // 3. If Name is also same, sort by ID in ascending order
+                return s1.getId() - s2.getId();
+            }
+        });
+
+        // Print the names of sorted students
+        for (Student st : studentList) {
+            System.out.println(st.getFname());
+        }
+        
+        in.close();
+    }
+}
+
+Java Arraylist
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Read the number of lines
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+
+        // Create a list to hold each line's list of integers
+        ArrayList<ArrayList<Integer>> lines = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            int d = sc.nextInt(); // Number of integers in this line
+            ArrayList<Integer> row = new ArrayList<>();
+            for (int j = 0; j < d; j++) {
+                row.add(sc.nextInt());
+            }
+            lines.add(row);
+        }
+
+        // Read the number of queries
+        int q = sc.nextInt();
+        for (int i = 0; i < q; i++) {
+            int x = sc.nextInt(); // Line number (1-indexed)
+            int y = sc.nextInt(); // Position number (1-indexed)
+
+            // Convert to 0-indexed and check bounds
+            // x-1 is the index for the outer list
+            // y-1 is the index for the inner list
+            if (x > 0 && x <= lines.size()) {
+                ArrayList<Integer> currentRow = lines.get(x - 1);
+                if (y > 0 && y <= currentRow.size()) {
+                    System.out.println(currentRow.get(y - 1));
+                } else {
+                    System.out.println("ERROR!");
+                }
+            } else {
+                System.out.println("ERROR!");
+            }
+        }
+
+        sc.close();
+    }
+}
+
+
+Java Subarray
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        // Read the size of the array
+        if (!scan.hasNextInt()) return;
+        int n = scan.nextInt();
+        int[] arr = new int[n];
+        
+        // Fill the array with values from STDIN
+        for (int i = 0; i < n; i++) {
+            arr[i] = scan.nextInt();
+        }
+        scan.close();
+        
+        int negativeSubarraysCount = 0;
+        
+        // Loop through each possible starting index
+        for (int i = 0; i < n; i++) {
+            int currentSum = 0;
+            
+            // Loop through each possible ending index starting from i
+            for (int j = i; j < n; j++) {
+                // Add the current element to the sum of the subarray [i...j]
+                currentSum += arr[j];
+                
+                // If the sum is negative, increment the counter
+                if (currentSum < 0) {
+                    negativeSubarraysCount++;
+                }
+            }
+        }
+        
+        // Print the final count
+        System.out.println(negativeSubarraysCount);
+    }
+}
+
+Java 1D Array
+
+  int[] a = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int val = scan.nextInt();
+            // 2. Save each sequential value to its corresponding location in the array.
+            a[i] = val;
+        }
+
+Java BigInteger
+import java.io.*;
+import java.util.*;
+import java.math.BigInteger; // Essential import for large numbers
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Use Scanner to read large numbers directly as strings or BigIntegers
+        if (sc.hasNext()) {
+            BigInteger a = sc.nextBigInteger();
+            BigInteger b = sc.nextBigInteger();
+            
+            // BigInteger is immutable, so we use methods for operations
+            // Addition: a + b
+            System.out.println(a.add(b));
+            
+            // Multiplication: a * b
+            System.out.println(a.multiply(b));
+        }
+        
+        sc.close();
+    }
+}
+Java Factory Pattern
+
+if (order.equalsIgnoreCase("pizza")) {
+            return new Pizza();
+        } else if (order.equalsIgnoreCase("cake")) {
+            return new Cake();
+        } else {
+            return null;
+        }
+Prime Checker
+
+import static java.lang.System.in;
+
+// 2. Implement the Prime class
+class Prime {
+    // The ... syntax (varargs) allows the method to accept any number of int arguments
+    public void checkPrime(int... numbers) {
+        for (int num : numbers) {
+            if (isPrime(num)) {
+                System.out.print(num + " ");
+            }
+        }
+        System.out.println(); // New line after each set of checks
+    }
+
+    // Helper method to check if a number is prime
+    private boolean isPrime(int n) {
+        if (n < 2) {
+            return false;
+        }
+        for (int i = 2; i <= (int) Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+Can You Access?
+
+ o = new Inner().new Private();
+            System.out.println(num + " is " + ((Solution.Inner.Private)o).powerof2(num));
+
+Tag Content Extractor
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Solution {
+    public static void main(String[] args) {
+
+        String pattern = "<([^>]+)>([^<>]+)</\\1>";
+        Pattern r = Pattern.compile(pattern);
+        Scanner in = new Scanner(System.in);
+        int testCases = Integer.parseInt(in.nextLine());
+        while(testCases > 0)
+        {
+            String line = in.nextLine();
+            Matcher m = r.matcher(line);
+            boolean findMatch = true;
+            while(m.find( ))
+            {
+                System.out.println(m.group(2));
+                findMatch = false;
+            } 
+            if(findMatch) 
+            {
+                System.out.println("None");
+            }
+            testCases--;
+        }
+    }
+}
+
+Valid Username Regular Expression
+
+class UsernameValidator {
+    /*
+     * Write regular expression here.
+     */
+    public static final String regularExpression =  "^[a-zA-Z]\\w{7,29}$";
+}
+
+Java Singleton Pattern
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.lang.reflect.*;
+
+
+class Singleton{
+ private static Singleton instance;
+    
+    // 2. Create a public String instance variable
+    public String str;
+
+    // 3. Create a private constructor to prevent instantiation from other classes
+    private Singleton() {
+        // Private constructor
+    }
+
+    // 4. Create a static method that returns the single instance of the class
+    public static Singleton getSingleInstance() {
+        // Lazy initialization: create the instance only if it doesn't exist
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+
+Java Strings Introduction
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String A = sc.next();
+        String B = sc.next();
+        int c = A.length();
+        int d = B.length();
+        
+        System.out.println(c + d);
+        
+        if (A.compareTo(B) > 0) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
+        
+        System.out.println(capitalizeFirstLetter(A) + " " + capitalizeFirstLetter(B));
+    }
+    
+    private static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str; 
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
+}
+
+Java Regex
+
+class MyRegex {
+    /*
+     * ([01]?\\d{1,2}|2[0-4]\\d|25[0-5]) 
+     * [01]?\\d{1,2} matches 1 or 2 digits, and 3 digits starting with 0 or 1
+     * 2[0-4]\\d matches numbers from 200 to 249
+     * 25[0-5] matches numbers from 250 to 255
+     * \\. matches the literal dot character
+     */
+    String octet = "([01]?\\d{1,2}|2[0-4]\\d|25[0-5])";
+    
+    // Concatenate the octet 4 times separated by dots
+    // ^ and $ ensure the string is exactly an IP and nothing else
+    public String pattern = "^" + octet + "\\." + octet + "\\." + octet + "\\." + octet + "$";
+}
+Java Primality Test
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        // Read the input as a BigInteger
+        if (scan.hasNextBigInteger()) {
+            BigInteger n = scan.nextBigInteger();
+            
+            /* 
+             * isProbablePrime(int certainty)
+             * Returns true if the BigInteger is probably prime, 
+             * false if it's definitely composite.
+             */
+            if (n.isProbablePrime(100)) {
+                System.out.println("prime");
+            } else {
+                System.out.println("not prime");
+            }
+        }
+        
+        scan.close();
+    }
+}
+
+Java Anagrams
+
+static boolean isAnagram(String a, String b) {
+        // 1. If lengths are different, they cannot be anagrams
+        if (a.length() != b.length()) {
+            return false;
+        }
+
+        // 2. Convert both strings to lowercase for case-insensitivity
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+
+        // 3. Create a frequency array for the 26 letters of the English alphabet
+        int[] frequencies = new int[26];
+
+        // 4. Traverse the strings and update frequencies
+        for (int i = 0; i < a.length(); i++) {
+            // For string 'a', increment the count at the character's index
+            frequencies[a.charAt(i) - 'a']++;
+            
+            // For string 'b', decrement the count at the character's index
+            frequencies[b.charAt(i) - 'a']--;
+        }
+
+        // 5. If the strings are anagrams, every value in the array must be 0
+        for (int count : frequencies) {
+            if (count != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+Java Substring Comparisons
+
+
+    public static String getSmallestAndLargest(String s, int k) {
+        // Initialize smallest and largest with the first substring of length k
+        String currentSubstring = s.substring(0, k);
+        String smallest = currentSubstring;
+        String largest = currentSubstring;
+
+        // Iterate through the string to find all substrings of length k
+        // The loop runs until 'i <= s.length() - k' to ensure we don't go out of bounds
+        for (int i = 1; i <= s.length() - k; i++) {
+            currentSubstring = s.substring(i, i + k);
+            
+            // Compare currentSubstring with the current smallest
+            if (currentSubstring.compareTo(smallest) < 0) {
+                smallest = currentSubstring;
+            }
+            
+            // Compare currentSubstring with the current largest
+            if (currentSubstring.compareTo(largest) > 0) {
+                largest = currentSubstring;
+            }
+        }
+
+        return smallest + "\n" + largest;
+    }
+
+   
+Java Substring
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String S = in.next();
+        int start = in.nextInt();
+        int end = in.nextInt();
+        
+        // This line extracts and prints the substring from start to end-1
+        System.out.println(S.substring(start, end));
+    }
+}
+
